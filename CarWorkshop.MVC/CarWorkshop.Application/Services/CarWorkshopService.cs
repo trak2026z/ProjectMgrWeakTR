@@ -1,21 +1,28 @@
-﻿using CarWorkshop.Domain.Interfaces;
+﻿using AutoMapper;
+using CarWorkshop.Application.CarWorkshop;
+using CarWorkshop.Domain.Interfaces;
 
 namespace CarWorkshop.Application.Services
 {
     public class CarWorkshopService : ICarWorkshopService
     {
         private readonly ICarworkshopRepository _carworkshopRepository;
+        private readonly IMapper _mapper;
 
-        public CarWorkshopService(ICarworkshopRepository carworkshopRepository)
+        public CarWorkshopService(
+            ICarworkshopRepository carworkshopRepository,
+            IMapper mapper)
         {
             _carworkshopRepository = carworkshopRepository;
+            _mapper = mapper;
         }
 
-        public async Task Create(Domain.Entities.CarWorkshop carWorkshop)
+        public async Task Create(CarWorkshopDto dto)
         {
-            carWorkshop.EncodeName();
+            var entity = _mapper.Map<Domain.Entities.CarWorkshop>(dto);
+            entity.EncodeName();
 
-            await _carworkshopRepository.Create(carWorkshop);
+            await _carworkshopRepository.Create(entity);
         }
     }
 }
