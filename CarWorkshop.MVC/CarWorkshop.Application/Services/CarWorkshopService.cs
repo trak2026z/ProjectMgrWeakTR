@@ -24,5 +24,12 @@ namespace CarWorkshop.Application.Services
 
             await _carworkshopRepository.Create(entity);
         }
+
+        public async Task<IEnumerable<CarWorkshopDto>> GetAllAsync()
+        {
+            var entities = await _carworkshopRepository.GetAllAsync();
+            return _mapper.Map<IEnumerable<CarWorkshopDto>>(entities);
+        }
+
     }
 }
