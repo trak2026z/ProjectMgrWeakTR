@@ -1,25 +1,24 @@
 ﻿@model IEnumerable<CarWorkshop.Application.CarWorkshop.CarWorkshopDto>
 
 @{
-    ViewData["Title"] = "Car Workshops";
+    ViewData["Title"] = "Lista warsztatów";
 }
 
-<h1>Car Workshops</h1>
+<h2 class="mb-4">Lista warsztatów</h2>
 
-<p>
-    <a asp-action="Create" class="btn btn-secondary">Create New</a>
-</p>
-
-<div class="row">
-    @foreach (var item in Model)
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    @foreach (var workshop in Model)
     {
-        <div class="card m-3" style="width: 18rem;">
-            <div class="card-body">
-                <h5 class="card-title">@item.Name</h5>
-                <h6 class="card-subtitle mb-2 text-muted">@item.PhoneNumber</h6>
-                <p class="card-text">@item.Description</p>
-                <a href="#" class="btn btn-primary">Details</a>
-                <a href="#" class="btn btn-outline-secondary">Edit</a>
+        <div class="col">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">@workshop.Name</h5>
+                    <p class="card-text flex-grow-1">@workshop.Description</p>
+                    <div class="mt-3">
+                        <a href="@Url.Action("Details", "CarWorkshop", new { name = workshop.Name })" class="btn btn-primary btn-sm me-2">Details</a>
+                        <a href="@Url.Action("Edit", "CarWorkshop", new { name = workshop.Name })" class="btn btn-secondary btn-sm">Edit</a>
+                    </div>
+                </div>
             </div>
         </div>
     }
