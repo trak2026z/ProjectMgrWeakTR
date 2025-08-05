@@ -16,7 +16,7 @@
                     <p class="card-text flex-grow-1">@workshop.Description</p>
                     <div class="mt-3">
                         <a class="btn btn-primary btn-sm me-2" asp-controller="CarWorkshop" asp-action="Details" asp-route-encodedName="@workshop.Name">Details</a>
-                        <a href="@Url.Action("Edit", "CarWorkshop", new { name = workshop.Name })" class="btn btn-secondary btn-sm">Edit</a>
+                        <a class="btn btn-secondary btn-sm" asp-controller="CarWorkshop" asp-action="Edit" asp-route-encodedName="@workshop.Name">Edit</a>
                     </div>
                 </div>
             </div>
