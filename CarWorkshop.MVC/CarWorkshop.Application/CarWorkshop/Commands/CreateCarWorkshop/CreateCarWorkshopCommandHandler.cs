@@ -29,6 +29,13 @@ namespace CarWorkshop.Application.CarWorkshop.Commands.CreateCarWorkshop
         public async Task<Unit> Handle(CreateCarWorkshopCommand request, CancellationToken cancellationToken)
         {
             var carWorkshop = _mapper.Map<Domain.Entities.CarWorkshop>(request);
+
+            var user = _userContext.GetCurrentUser();
+            var isEditable = user != null && carWorkshop.CreatedById == user.Id;
+
+            if (isEditable)
+                return Unit.Value;
+
             carWorkshop.EncodeName();
 
             carWorkshop.CreatedById = _userContext.GetCurrentUser().Id;

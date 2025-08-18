@@ -16,5 +16,6 @@ namespace CarWorkshop.Application.CarWorkshop
         public string Street { get; set; } = default!;
         public string City { get; set; } = default!;
         public string PostalCode { get; set; } = default!;
+        public bool IsEditable { get; set; }
     }
 }
