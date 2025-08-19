@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CarWorkshop.Application.CarWorkshop
+﻿namespace CarWorkshop.Application.CarWorkshop
 {
     public class CarWorkshopDto
     {
@@ -16,5 +9,6 @@ namespace CarWorkshop.Application.CarWorkshop
         public string Street { get; set; } = default!;
         public string City { get; set; } = default!;
         public string PostalCode { get; set; } = default!;
+        public bool IsEditable { get; set; }
     }
 }
