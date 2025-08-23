@@ -2,6 +2,7 @@
 using CarWorkshop.Application.ApplicationUser;
 using CarWorkshop.Application.CarWorkshop;
 using CarWorkshop.Application.CarWorkshop.Commands.EditCarWorkshop;
+using CarWorkshop.Application.CarWorkshopService;
 using CarWorkshop.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -34,6 +35,9 @@ namespace CarWorkshop.Application.Mappings
                             .ForMember(dest => dest.IsEditable,opt => opt.MapFrom(src =>currentUser != null && (src.CreatedById == currentUser.Id ||currentUser.IsInRole("Moderator"))));
 
             CreateMap<CarWorkshopDto, EditCarWorkshopCommand>();
+
+            CreateMap<CarWorkshopServiceDto, Domain.Entities.CarWorkshopService>()
+                .ReverseMap();
         }
     }
 }
