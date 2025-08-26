@@ -20,4 +20,9 @@
     <ProjectReference Include="..\CarWorkshop.Application\CarWorkshop.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.11" />
+  </ItemGroup>
+
+
 </Project>

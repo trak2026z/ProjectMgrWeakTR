@@ -1,0 +1,55 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:15
+    container_name: carworkshop_postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: CarWorkshopDb
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+  
+  migrator:
+    build:
+     context: .
+     dockerfile: CarWorkshop.MVC/Dockerfile
+     target: build   # 👈 ważne: używamy obrazu ze SDK
+    depends_on:
+     - db
+    environment:
+     ConnectionStrings__DefaultConnection: "Host=db;Port=5432;Database=CarWorkshopDb;Username=postgres;Password=postgres;"
+    working_dir: /src/CarWorkshop.MVC
+    entrypoint: [
+      "dotnet", "ef", "database", "update",
+      "--project", "../CarWorkshop.Infrastructure",
+      "--startup-project", ".",
+      "--verbose"
+    ]
+
+
+  web:
+   build:
+    context: .
+    dockerfile: CarWorkshop.MVC/Dockerfile
+   ports:
+    - "5000:80"
+   depends_on:
+    - db
+   environment:
+    ConnectionStrings__DefaultConnection: "Host=db;Port=5432;Database=CarWorkshopDb;Username=postgres;Password=postgres;"
+
+   working_dir: /app
+   volumes:
+    - ./CarWorkshop.MVC/wait-for-db.sh:/app/wait-for-db.sh:ro
+   entrypoint: ["./wait-for-db.sh", "db", "5432", "dotnet", "CarWorkshop.MVC.dll"]
+
+
+
+
+volumes:
+  pgdata:
